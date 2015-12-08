@@ -25,7 +25,7 @@ public class CategoryFlow {
         flowBuilder.viewNode("list", "/category/categories.xhtml").markAsStartNode();
         flowBuilder.viewNode("detail", "/category/category.xhtml");
         
-        flowBuilder.returnNode("index").fromOutcome("index");
+        flowBuilder.returnNode("exitFlow").fromOutcome("/index");
         
         return flowBuilder.getFlow();
     }
