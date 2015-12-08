@@ -15,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package com.dmainardi.masterDetail.presentation;
+package com.dmainardi.masterDetail.presentation.category;
 
 import com.dmainardi.masterDetail.business.boundary.CategoryService;
 import com.dmainardi.masterDetail.business.entity.Category;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PreDestroy;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,28 +32,51 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@RequestScoped
-public class CategoryPresenter {
+@FlowScoped("category")
+public class CategoryPresenter implements Serializable {
     @Inject
     CategoryService categoryService;
     
-    private List<Category> categories;
+    private Category category;
     
     @PostConstruct
     public void init() {
-        categories = categoryService.listCategories();
+        System.out.println("Entrato");
     }
     
+    @PreDestroy
+    public void clean() {
+        System.out.println("Uscito");
+    }
+    
+    public List<Category> listCategories() {
+        return categoryService.listCategories();
+    }
+        
     public void deleteCategory(Category category) {
         categoryService.deleteCategory(category);
     }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    
+    public String saveCategory() {
+        categoryService.saveCategory(category);
+        
+        return "categories";
     }
     
+    public String detailCategory(Long id) {
+        if (id == null)
+            category = new Category();
+        else
+            category = categoryService.readCategory(id);
+        
+        return "category";
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

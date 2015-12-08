@@ -9,7 +9,7 @@
     <h:body>
         <h1>Categories' list</h1>
         <h2>Every element must be linked to a category. Here you can find the archive of them.</h2>
-        <h:dataTable value="#{categoryPresenter.categories}" var="cat">
+        <h:dataTable value="#{categoryPresenter.listCategories()}" var="cat">
             <h:column>
                 <f:facet name="header">Name</f:facet>
                 <h:outputText value="#{cat.name}"/>
@@ -17,12 +17,14 @@
             <h:column>
                 <f:facet name="header">Actions</f:facet>
                 <h:form>
+                    <h:commandButton value="Open" action="#{categoryPresenter.detailCategory(cat.id)}"/>
                     <h:commandButton value="Delete" action="#{categoryPresenter.deleteCategory(cat)}"/>
                 </h:form>
             </h:column>
         </h:dataTable>
         <h:form>
-            <h:button value="Homepage" outcome="index"/>
+            <h:commandButton value="New category" action="#{categoryPresenter.detailCategory(null)}"/>
+            <h:button value="Homepage" outcome="/index"/>
         </h:form>
     </h:body>
 </html>
