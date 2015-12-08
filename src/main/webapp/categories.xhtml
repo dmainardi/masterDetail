@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Categories</title>
+    </h:head>
+    <h:body>
+        <h1>Categories' list</h1>
+        <h2>Every element must be linked to a category. Here you can find the archive of them.</h2>
+        <h:dataTable value="#{categoryPresenter.categories}" var="cat">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText value="#{cat.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:form>
+                    <h:commandButton value="Delete" action="#{categoryPresenter.deleteCategory(cat)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+        <h:form>
+            <h:button value="Homepage" outcome="index"/>
+        </h:form>
+    </h:body>
+</html>
+
