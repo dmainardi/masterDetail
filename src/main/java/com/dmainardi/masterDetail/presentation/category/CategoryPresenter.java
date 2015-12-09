@@ -21,8 +21,6 @@ import com.dmainardi.masterDetail.business.boundary.CategoryService;
 import com.dmainardi.masterDetail.business.entity.Category;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,16 +36,6 @@ public class CategoryPresenter implements Serializable {
     CategoryService categoryService;
     
     private Category category;
-    
-    @PostConstruct
-    public void init() {
-        System.out.println("Entrato");
-    }
-    
-    @PreDestroy
-    public void clean() {
-        System.out.println("Uscito");
-    }
     
     public List<Category> listCategories() {
         return categoryService.listCategories();

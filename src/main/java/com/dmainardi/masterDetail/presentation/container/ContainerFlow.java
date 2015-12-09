@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dmainardi.masterDetail.presentation.category;
+package com.dmainardi.masterDetail.presentation.container;
 
 import javax.enterprise.inject.Produces;
 import javax.faces.flow.Flow;
@@ -15,15 +15,16 @@ import javax.faces.flow.builder.FlowDefinition;
  *
  * @author Davide Mainardi <ingmainardi at live.com>
  */
-public class CategoryFlow {
+public class ContainerFlow {
     
     @Produces
     @FlowDefinition
-    public Flow defineCategoryFlow(@FlowBuilderParameter FlowBuilder flowBuilder) {
-        flowBuilder.id("", "category");
+    public Flow defineContainerFlow(@FlowBuilderParameter FlowBuilder flowBuilder) {
+        flowBuilder.id("", "container");
         
-        flowBuilder.viewNode("list", "/category/categories.xhtml").markAsStartNode();
-        //flowBuilder.viewNode("detail", "/category/category.xhtml");
+        flowBuilder.viewNode("list", "/container/containers.xhtml").markAsStartNode();
+        //flowBuilder.viewNode("detail", "/container/container.xhtml");
+        //flowBuilder.viewNode("elementDetail", "/container/element.xhtml");
         
         flowBuilder.returnNode("exitFlow").fromOutcome("/index");
         

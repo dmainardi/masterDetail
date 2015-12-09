@@ -18,6 +18,7 @@
 package com.dmainardi.masterDetail.business.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,6 +52,7 @@ public class Container implements Serializable {
     private List<Element> elements;
 
     public Container() {
+        elements = new ArrayList<>();
     }
 
     public Long getId() {
