@@ -5,11 +5,15 @@
  */
 package com.dmainardi.masterDetail.presentation.container;
 
+import com.dmainardi.masterDetail.business.boundary.CategoryService;
 import com.dmainardi.masterDetail.business.boundary.ContainerService;
+import com.dmainardi.masterDetail.business.entity.Category;
 import com.dmainardi.masterDetail.business.entity.Container;
 import com.dmainardi.masterDetail.business.entity.Element;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,9 +28,26 @@ public class ContainerPresenter implements Serializable {
     @Inject
     ContainerService containerService;
     
+    @Inject
+    CategoryService categoryService;
+    
     private Container container;
     
     private Element elementSelected;
+    
+    @PostConstruct
+    public void init() {
+        System.out.println("Entered container flow");
+    }
+    
+    @PreDestroy
+    public void clean() {
+        System.out.println("Exited container flow");
+    }
+    
+    public List<Category> listCategories() {
+        return categoryService.listCategories();
+    }
     
     public List<Container> listContainers() {
         return containerService.listContainers();

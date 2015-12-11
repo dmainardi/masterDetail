@@ -34,6 +34,7 @@
             <h:commandButton value="New element" action="#{containerPresenter.detailElement(null)}"/><br/>
             <h:outputLabel for="note" value="Note"/><br/>
             <h:inputText id="note" value="#{containerPresenter.container.note}"/><br/>
+            <h:commandButton value="Save" action="#{containerPresenter.saveContainer()}"/>
         </h:form>
     </h:body>
 </html>
