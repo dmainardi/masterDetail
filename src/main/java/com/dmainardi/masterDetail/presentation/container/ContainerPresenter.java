@@ -28,9 +28,6 @@ public class ContainerPresenter implements Serializable {
     @Inject
     ContainerService containerService;
     
-    @Inject
-    CategoryService categoryService;
-    
     private Container container;
     
     private Element elementSelected;
@@ -43,10 +40,6 @@ public class ContainerPresenter implements Serializable {
     @PreDestroy
     public void clean() {
         System.out.println("Exited container flow");
-    }
-    
-    public List<Category> listCategories() {
-        return categoryService.listCategories();
     }
     
     public List<Container> listContainers() {

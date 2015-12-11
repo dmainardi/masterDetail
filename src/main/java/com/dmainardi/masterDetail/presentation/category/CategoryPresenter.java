@@ -48,10 +48,6 @@ public class CategoryPresenter implements Serializable {
     public void clean() {
         System.out.println("Exited category flow");
     }
-    
-    public List<Category> listCategories() {
-        return categoryService.listCategories();
-    }
         
     public void deleteCategory(Category category) {
         categoryService.deleteCategory(category);
