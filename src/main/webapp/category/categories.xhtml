@@ -9,23 +9,25 @@
     <h:body>
         <h1>Categories' list</h1>
         <h2>Every element must be linked to a category. Here you can find the archive of them.</h2>
-        <h:dataTable value="#{categoryListPresenter.listCategories()}" var="cat" border="1">
-            <h:column>
-                <f:facet name="header">Name</f:facet>
-                <h:outputText value="#{cat.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Actions</f:facet>
-                <h:form>
-                    <h:commandButton value="Open" action="#{categoryPresenter.detailCategory(cat.id)}"/>
-                    <h:commandButton value="Delete" action="#{categoryPresenter.deleteCategory(cat)}"/>
-                </h:form>
-            </h:column>
-        </h:dataTable>
         <h:form>
-            <h:commandButton value="New category" action="#{categoryPresenter.detailCategory(null)}"/>
-            <h:commandButton value="Homepage" action="exitFlow"/>
+            <h:dataTable value="#{categoryListPresenter.categories}" var="cat" border="1">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{cat.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:button value="Open" outcome="/category/category">
+                        <f:param name="id" value="#{cat.id}" />
+                    </h:button>
+                    <h:commandButton value="Delete" action="#{categoryListPresenter.deleteCategory(cat.id)}"/>
+                </h:column>
+            </h:dataTable>
         </h:form>
+        <h:button value="New category" outcome="/category/category">
+            <f:param name="id" value="0" />
+        </h:button>
+        <h:button value="Homepage" outcome="/index"/>
     </h:body>
 </html>
 

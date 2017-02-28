@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Category details</title>
+        <f:metadata>
+            <f:viewParam name="id"
+                         value="#{categoryPresenter.id}"
+                         converter="javax.faces.Long"
+                         required="true"/>
+            <f:viewAction action="#{categoryPresenter.detailCategory()}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h1>Category details</h1>
         <h:form>
             <h:outputLabel for="name" value="Name"/><br/>
             <h:inputText id="name" value="#{categoryPresenter.category.name}"/><br/>
+            <h:button value="Cancel" outcome="/category/categories"/>
             <h:commandButton value="Save" action="#{categoryPresenter.saveCategory()}"/>
         </h:form>
     </h:body>

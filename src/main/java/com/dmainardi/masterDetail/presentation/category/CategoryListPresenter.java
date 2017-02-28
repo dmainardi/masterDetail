@@ -19,6 +19,7 @@ package com.dmainardi.masterDetail.presentation.category;
 import com.dmainardi.masterDetail.business.boundary.CategoryService;
 import com.dmainardi.masterDetail.business.entity.Category;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,11 +31,24 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class CategoryListPresenter {
-    
     @Inject
-    CategoryService categoryService;
+    CategoryService service;
+    
+    private List<Category> categories;
 
-    public List<Category> listCategories() {
-        return categoryService.listCategories();
+    @PostConstruct
+    public void init() {
+        categories = service.listCategories();
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+    
+    public void deleteCategory(Long id) {
+        if (id != null) {
+            service.deleteCategory(id);
+            categories = service.listCategories();
+        }
     }
 }

@@ -19,9 +19,7 @@ package com.dmainardi.masterDetail.presentation.category;
 import com.dmainardi.masterDetail.business.boundary.CategoryService;
 import com.dmainardi.masterDetail.business.entity.Category;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.faces.flow.FlowScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,40 +28,25 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@FlowScoped("category")
+@ViewScoped
 public class CategoryPresenter implements Serializable {
     @Inject
-    CategoryService categoryService;
+    CategoryService service;
     
     private Category category;
-    
-    @PostConstruct
-    public void init() {
-        System.out.println("Entered category flow");
-    }
-    
-    @PreDestroy
-    public void clean() {
-        System.out.println("Exited category flow");
-    }
-        
-    public void deleteCategory(Category category) {
-        categoryService.deleteCategory(category);
-    }
+    private Long id;
     
     public String saveCategory() {
-        categoryService.saveCategory(category);
+        service.saveCategory(category);
         
-        return "categories";
+        return "/category/categories?faces-redirect=true";
     }
     
-    public String detailCategory(Long id) {
-        if (id == null)
+    public void detailCategory() {
+        if (id == 0)
             category = new Category();
         else
-            category = categoryService.readCategory(id);
-        
-        return "category";
+            category = service.readCategory(id);
     }
 
     public Category getCategory() {
@@ -73,4 +56,13 @@ public class CategoryPresenter implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 }
