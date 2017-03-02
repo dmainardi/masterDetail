@@ -8,23 +8,25 @@
     </h:head>
     <h:body>
         <h1>Containers' list</h1>
-        <h:dataTable value="#{containerPresenter.listContainers()}" var="container" border="1">
-            <h:column>
-                <f:facet name="header">Name</f:facet>
-                <h:outputText value="#{container.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Actions</f:facet>
-                <h:form>
-                    <h:commandButton value="Open" action="#{containerPresenter.detailContainer(container.id)}"/>
-                    <h:commandButton value="Delete" action="#{containerPresenter.deleteContainer(container)}"/>
-                </h:form>
-            </h:column>
-        </h:dataTable>
         <h:form>
-            <h:commandButton value="New container" action="#{containerPresenter.detailContainer(null)}"/>
-            <h:commandButton value="Homepage" action="exitFlow"/>
+            <h:dataTable value="#{containerListPresenter.containers}" var="container" border="1">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{container.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:button value="Open" outcome="/container/container">
+                        <f:param name="id" value="#{container.id}" />
+                    </h:button>
+                    <h:commandButton value="Delete" action="#{containerListPresenter.deleteContainer(container.id)}"/>
+                </h:column>
+            </h:dataTable>
         </h:form>
+        <h:button value="New container" outcome="/container/container">
+            <f:param name="id" value="0" />
+        </h:button>
+        <h:button value="Homepage" outcome="/index"/>
     </h:body>
 </html>
 

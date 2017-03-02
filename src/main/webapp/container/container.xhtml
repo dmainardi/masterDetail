@@ -5,13 +5,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Container details</title>
+        <f:metadata>
+            <f:viewParam name="id"
+                         value="#{containerPresenter.id}"
+                         converter="javax.faces.Long"/>
+            <f:viewAction action="#{containerPresenter.detailContainer()}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <h1>Container details</h1>
         <h:form>
-            <h:outputLabel for="name" value="Name"/><br/>
+            <h:outputLabel for="name" value="Name"/>
+            <h:message for="name"/><br/>
             <h:inputText id="name" value="#{containerPresenter.container.name}"/><br/>
-            <h:outputLabel for="elements" value="Elements"/><br/>
+            <h:outputLabel for="elements" value="Elements"/>
+            <h:message for="elements"/><br/>
             <h:dataTable id="elements" value="#{containerPresenter.container.elements}" var="element" border="1">
                 <h:column>
                     <f:facet name="header">Code</f:facet>
@@ -27,13 +35,15 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Actions</f:facet>
-                    <h:commandButton value="Open" action="#{containerPresenter.detailElement(element.id)}"/>
+                    <h:commandButton value="Open" action="#{containerPresenter.detailElement(element)}"/>
                     <h:commandButton value="Delete" action="#{containerPresenter.deleteElement(element)}"/>
                 </h:column>
             </h:dataTable>
             <h:commandButton value="New element" action="#{containerPresenter.detailElement(null)}"/><br/>
-            <h:outputLabel for="note" value="Note"/><br/>
+            <h:outputLabel for="note" value="Note"/>
+            <h:message for="note"/><br/>
             <h:inputText id="note" value="#{containerPresenter.container.note}"/><br/>
+            <h:button value="Cancel" outcome="/container/containers"/>
             <h:commandButton value="Save" action="#{containerPresenter.saveContainer()}"/>
         </h:form>
     </h:body>

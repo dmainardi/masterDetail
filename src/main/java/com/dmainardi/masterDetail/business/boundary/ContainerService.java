@@ -47,8 +47,8 @@ public class ContainerService {
         return em.find(Container.class, id);
     }
     
-    public void deleteContainer(Container container) {
-        em.remove(em.merge(container));
+    public void deleteContainer(Long id) {
+        em.remove(readContainer(id));
     }
 
     public List<Container> listContainers() {

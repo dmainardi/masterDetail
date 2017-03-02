@@ -43,10 +43,13 @@ public class CategoryPresenter implements Serializable {
     }
     
     public void detailCategory() {
-        if (id == 0)
-            category = new Category();
-        else
-            category = service.readCategory(id);
+        if (id != null) {
+            if (id == 0)
+                category = new Category();
+            else
+                category = service.readCategory(id);
+            id = null;
+        }
     }
 
     public Category getCategory() {

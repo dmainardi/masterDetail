@@ -20,10 +20,9 @@ import com.dmainardi.masterDetail.business.boundary.ContainerService;
 import com.dmainardi.masterDetail.business.entity.Container;
 import com.dmainardi.masterDetail.business.entity.Element;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.faces.flow.FlowScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,46 +31,48 @@ import javax.inject.Named;
  * @author Davide Mainardi <ingmainardi at live.com>
  */
 @Named
-@FlowScoped("container")
+@ViewScoped
 public class ContainerPresenter implements Serializable {
     @Inject
-    ContainerService containerService;
+    ContainerService service;
     
     private Container container;
+    private Long id;
     
-    private Element elementSelected;
+    public String saveContainer() {
+        service.saveContainer(container);
+        
+        return "/container/containers?faces-redirect=true";
+    }
     
     @PostConstruct
     public void init() {
-        System.out.println("Entered container flow");
+        container = (Container) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("container");
     }
     
-    @PreDestroy
-    public void clean() {
-        System.out.println("Exited container flow");
+    public void detailContainer() {
+        if (container == null && id != null) {
+            if (id == 0)
+                container = new Container();
+            else
+                container = service.readContainer(id);
+            id = null;
+        }
     }
     
-    public List<Container> listContainers() {
-        return containerService.listContainers();
-    }
+    public String detailElement(Element element) {
+        if (element != null)
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("element", element);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("container", container);
         
-    public void deleteContainer(Container container) {
-        containerService.deleteContainer(container);
+        return "element?faces-redirect=true";
     }
     
-    public String saveContainer() {
-        containerService.saveContainer(container);
-        
-        return "containers";
-    }
-    
-    public String detailContainer(Long id) {
-        if (id == null)
-            container = new Container();
-        else
-            container = containerService.readContainer(id);
-        
-        return "container";
+    public void deleteElement(Element element) {
+        if (element != null) {
+            container.getElements().remove(element);
+            element.setContainer(null);
+        }
     }
 
     public Container getContainer() {
@@ -81,39 +82,13 @@ public class ContainerPresenter implements Serializable {
     public void setContainer(Container container) {
         this.container = container;
     }
-    
-    public List<Element> listElements() {
-        return container.getElements();
-    }
-    
-    public String saveElement() {
-        if(elementSelected.getContainer() == null) {
-            container.getElements().add(elementSelected);
-            elementSelected.setContainer(container);
-        }
-        
-        return "container";
-    }
-        
-    public void deleteElement(Element element) {
-        container.getElements().remove(element);
-        element.setContainer(null);
-    }
-    
-    public String detailElement(Element element) {
-        if (element == null)
-            elementSelected = new Element();
-        else
-            elementSelected = element;
-        
-        return "element";
+
+    public Long getId() {
+        return id;
     }
 
-    public Element getElementSelected() {
-        return elementSelected;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public void setElementSelected(Element elementSelected) {
-        this.elementSelected = elementSelected;
-    }
+    
 }
